@@ -10,17 +10,17 @@ data "archive_file" "lambda_function_zip" {
   output_path = "${path.module}/lambda_function.zip"
 }
 
-resource "aws_s3_bucket" "lambda_bucket" {
-  bucket = "app-lambdas"
+resource "aws_s3_bucket" "demo_books_lambda_bucket" {
+  bucket = "demo-books-lambdas"
 
   tags = {
-    Name        = "APP-LAMBDA"
+    Name        = "Bunnyshell-Demo"
     Environment = "Stage"
   }
 }
 # # upload to s3
 resource "aws_s3_object" "lambda_function_zip" {
-  bucket = aws_s3_bucket.lambda_bucket.id
+  bucket = aws_s3_bucket.demo_books_lambda_bucket.id
 
   key    = "lambda_function.zip"
   source = data.archive_file.lambda_function_zip.output_path
@@ -33,7 +33,7 @@ resource "aws_s3_object" "lambda_function_zip" {
 resource "aws_lambda_function" "myLambda" {
   function_name = var.lambda_function_name
 #   filename = "lambda-function.zip"
-  s3_bucket = aws_s3_bucket.lambda_bucket.id
+  s3_bucket = aws_s3_bucket.demo_books_lambda_bucket.id
 #   s3_bucket = var.s3_bucket_id
   s3_key    = aws_s3_object.lambda_function_zip.key
 #   s3_key = var.s3_bucket_key
