@@ -6,9 +6,10 @@ import os
 
 def handler(event, context):
     letters = string.ascii_lowercase
+    app_url = os.environ.get('APP_URL')
     title = ''.join(random.choice(letters) for i in range(10))
     description = ''.join(random.choice(letters) for i in range(20))
-    conn = http.client.HTTPSConnection("backend-tksd7k.bunnyenv.com")
+    conn = http.client.HTTPSConnection(app_url)
     payload = 'title='+title+'&description='+description
     headers = {
         'Content-Type': 'application/x-www-form-urlencoded'
