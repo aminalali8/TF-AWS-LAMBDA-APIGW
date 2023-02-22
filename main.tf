@@ -11,7 +11,7 @@ data "archive_file" "lambda_function_zip" {
 }
 
 resource "aws_s3_bucket" "demo_books_lambda_bucket" {
-  bucket = "demo-books-lambdas"
+  bucket = "demo-books-lambdas-${var.environment_unique}"
 
   tags = {
     Name        = "Bunnyshell-Demo"
@@ -31,7 +31,7 @@ resource "aws_s3_object" "lambda_function_zip" {
 
 # create lambda from s3
 resource "aws_lambda_function" "myLambda" {
-  function_name = var.lambda_function_name
+  function_name = "${var.lambda_function_name}-${var.environment_unique}"
 #   filename = "lambda-function.zip"
   s3_bucket = aws_s3_bucket.demo_books_lambda_bucket.id
 #   s3_bucket = var.s3_bucket_id
@@ -53,7 +53,7 @@ resource "aws_lambda_function" "myLambda" {
 # IAM role which dictates what other AWS services the Lambda function
 # may access.
 resource "aws_iam_role" "lambda_role" {
-  name = "role_lambda"
+  name = "role_lambda-${var.environment_unique}"
 
   assume_role_policy = <<EOF
 {
@@ -75,7 +75,7 @@ EOF
 
 resource "aws_api_gateway_rest_api" "apiLambda" {
   # name = "myApi"
-  name = var.api_name
+  name = "${var.api_name}-${var.environment_unique}"
 }
 
 resource "aws_api_gateway_resource" "proxy" {
@@ -126,7 +126,7 @@ resource "aws_api_gateway_deployment" "apideploy" {
 
   rest_api_id = aws_api_gateway_rest_api.apiLambda.id
   # stage_name  = "test"
-  stage_name = var.api_deployment_stage_name
+  stage_name = "${var.api_deployment_stage_name}-${var.environment_unique}"
 }
 
 resource "aws_lambda_permission" "apigw" {

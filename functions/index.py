@@ -16,4 +16,6 @@ def handler(event, context):
     conn.request("POST", "/books", payload, headers)
     res = conn.getresponse()
     data = res.read()
-    print(data.decode("utf-8"))
+    return {
+        'message':  data.decode("utf-8")
+    }

@@ -1,3 +1,9 @@
+variable "environment_unique" {
+    description = "Bunnyshell Environment Identifier"
+    type = string
+    default = null
+}
+
 # Input variable definitions
 variable "aws_region" {
   description = "AWS region for all resources."
