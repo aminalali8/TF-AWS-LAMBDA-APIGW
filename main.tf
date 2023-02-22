@@ -7,7 +7,7 @@ provider "aws" {
 data "archive_file" "lambda_function_zip" {
   type = "zip"
   source_file = "${path.module}/functions/index.py"
-  source_dir  = "${path.module}/functions"
+#   source_dir  = "${path.module}/functions"
   output_path = "${path.module}/lambda_function.zip"
 }
 
