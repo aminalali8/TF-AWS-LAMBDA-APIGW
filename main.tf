@@ -15,7 +15,7 @@ resource "aws_s3_bucket" "demo_books_lambda_bucket" {
 
   tags = {
     Name        = "Bunnyshell-Demo"
-    Environment = "Stage"
+    Environment = "Dev"
   }
 }
 # # upload to s3
