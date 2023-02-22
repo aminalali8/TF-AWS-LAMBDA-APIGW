@@ -45,7 +45,8 @@ resource "aws_lambda_function" "myLambda" {
 
   environment {
     variables = {
-      APP_URL = var.env_app_url
+      APP_URL = var.env_app_url,
+      VERSION = 1
     }
   }
 }
